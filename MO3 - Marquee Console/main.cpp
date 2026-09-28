@@ -16,7 +16,7 @@ class Marquee{
         char text[80] = "Welcome to CSOPESY!";
         char screen[20][80] {};
         std::atomic<bool> running = false;
-        int time = 100;
+        int time = 500;
         std::atomic<bool> exit = false;
         std::thread worker;
         std::mutex textMutex;
