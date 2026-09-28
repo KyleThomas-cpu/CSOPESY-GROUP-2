@@ -22,13 +22,6 @@ class Marquee{
         std::mutex textMutex;
         std::mutex outputMutex;
     
-    void drawEmptyGrid(){
-        char blank[20][80];
-        for (int i = 0; i < 20; i++)
-            for (int j = 0; j < 80; j++)
-                blank[i][j] = '.';
-        printFrame(blank);
-    }
     void animate(){
         
         int x = 0;
@@ -58,19 +51,14 @@ class Marquee{
                 }
             }
 
-            if (x >= 79 - strlen(localText) || x <= 0){
-                dx = -dx;
-            }
-            if (y >= 19 || y <= 0){
-                dy = -dy;
-            }
-            int maxLen = 80 - x;
+            int len = strlen(localText);
+            int maxX = 80- len;
+            if (x >= maxX) {x = maxX; dx = -1;}
+            else if (x <= 0) {x = 0; dx = 1;}
+            if (y >= 19) {y = 19; dy = -1;}
+            else if (y <= 0) {y = 0; dy = 1;}
 
-            if (strlen(localText) < maxLen) {
-                maxLen = strlen(localText);
-            }
-
-            for (int i = 0; i < maxLen; i++) {
+            for(int i = 0; i < len; i++){
                 screen[y][x + i] = localText[i];
             }
 
@@ -101,7 +89,8 @@ class Marquee{
     }
     void setText(const char newtext[]){
         std::lock_guard<std::mutex> lock(textMutex);
-        strcpy(text, newtext);
+        strncpy(text, newtext, sizeof(text) - 1);
+        text[sizeof(text) - 1] = '\0';
     }
     void startMarquee(){
         {
