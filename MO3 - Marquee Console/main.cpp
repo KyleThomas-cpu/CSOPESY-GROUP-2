@@ -85,6 +85,7 @@ class Marquee{
     void printFrame(char arr[][80]){
         std::lock_guard<std::mutex> lock(outputMutex);
         std::string frame;
+        frame += "\0337";
         frame += "\033[H";
         for (int i = 0; i < 20; i++) {
             frame += "\033[2K";
@@ -95,8 +96,7 @@ class Marquee{
                 frame += '\n';
             }
         }
-        frame += "\033[22;1H";
-        frame += "Command>";
+        frame += "\0338";
         std::cout << frame << std::flush;
     }
     void setText(const char newtext[]){
@@ -104,9 +104,15 @@ class Marquee{
         strcpy(text, newtext);
     }
     void startMarquee(){
+        {
+            std::lock_guard<std::mutex> lock(outputMutex);
+            if(!running){
+                std::cout << "\033[2J";
+            }
+            std::cout << "\033[22;1HCommand>" << std::flush;
+        }
         if(running) return;
         running = true;
-        std::cout << "\033[2J";
         worker = std::thread(&Marquee::animate, this);
     }
     void stopMarquee(){
@@ -136,7 +142,7 @@ void printHeader(){
     std::cout << "Tiu, Kyle Thomas\n";
     std::cout << "Go, John William\n";
     std::cout << "Gutierrez, Michael Luis\n";
-    std::cout << "Version Date: <Date of Completion>\n\n";
+    std::cout << "Version Date: 9/28/2026\n\n";
 }
 
 void parseCommand(const std::string& line, Marquee& m){
@@ -170,9 +176,9 @@ void parseCommand(const std::string& line, Marquee& m){
 
     }else if(cmd == "stop_marquee"){
         m.stopMarquee();
-
+        printHeader();
         std::lock_guard<std::mutex> lock(m.outputMutex);
-        std::cout << "Command>" << std::flush;
+        std::cout << "\033[22;1HCommand>" << std::flush;
 
     }else if(cmd == "set_text"){
         std::lock_guard<std::mutex> lock(m.outputMutex);
@@ -226,7 +232,7 @@ int main(){
     std::cout << "\033[2J";
     std::cout << "\033[H";
     printHeader();
-    m.drawEmptyGrid();
+    std::cout << "\033[22;1HCommand>" << std::flush;    
     while(!m.exit){
         std::getline(std::cin, command);
         {
