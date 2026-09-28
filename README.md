@@ -33,9 +33,9 @@ After running the program:
 <img width="910" height="430" alt="image" src="https://github.com/user-attachments/assets/0d75f8ca-1360-4505-806a-8bee6cad9264" />
 
 # LIST OF COMMANDS
-  help            - displays the commands and description
-  start_marquee   - starts marquee animation
-  stop_marquee    - stops marquee animation
-  set_text <text> - sets the text that will display as marquee
-  set_speed <ms>  - sets how fast the marquee animation will refresh in ms
-  exit            - exits the console
+  help            - displays the commands and description<br>
+  start_marquee   - starts marquee animation<br>
+  stop_marquee    - stops marquee animation<br>
+  set_text <text> - sets the text that will display as marquee<br>
+  set_speed <ms>  - sets how fast the marquee animation will refresh in ms<br>
+  exit            - exits the console<br>
