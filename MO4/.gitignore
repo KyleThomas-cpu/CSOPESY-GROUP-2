@@ -1,0 +1,5 @@
+Debug/
+*.obj
+*.pdb
+*.ilk
+*.exe
