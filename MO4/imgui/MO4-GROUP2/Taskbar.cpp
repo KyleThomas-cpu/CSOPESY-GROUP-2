@@ -78,17 +78,14 @@ unsigned int Taskbar::loadTexture(const char* filename)
 }
 
 bool Taskbar::addIcon(const std::string& name, const char* imagePath, std::function<void()> onClick){
-    unsigned int tex = loadTexture(imagePath);
-    if(tex==0) return false;
-
+    unsigned int tex = loadTexture(imagePath); 
     TaskbarIcon icon;
     icon.name = name;
     icon.texture = tex;
     icon.onClick = std::move(onClick);
     taskbarIcons.push_back(std::move(icon));
-    return true;
+    return tex != 0;
 }
-
 void Taskbar::draw()
 {
     ImVec2 displaySize = ImGui::GetIO().DisplaySize;
@@ -111,20 +108,25 @@ void Taskbar::draw()
     bool first = true;
     for (auto& icon : taskbarIcons)
     {
-        if (!icon.texture)
-            continue;
-
         if (!first)
             ImGui::SameLine();
         first = false;
 
-        if (ImGui::ImageButton(icon.name.c_str(),
-                               (ImTextureID)(intptr_t)icon.texture,
-                               ImVec2(40 * scale, 40 * scale)))
+        bool clicked;
+        if (icon.texture)
         {
-            if (icon.onClick)
-                icon.onClick();
+            clicked = ImGui::ImageButton(icon.name.c_str(),
+                                         (ImTextureID)(intptr_t)icon.texture,
+                                         ImVec2(40 * scale, 40 * scale));
         }
+        else
+        {
+            // No picture: text button, width fits the label, same height as icons
+            clicked = ImGui::Button(icon.name.c_str(), ImVec2(0, 40 * scale));
+        }
+
+        if (clicked && icon.onClick)
+            icon.onClick();
 
         if (ImGui::IsItemHovered())
             ImGui::SetTooltip("%s", icon.name.c_str());

@@ -55,6 +55,11 @@ int main(int, char**)
     {
         Desktop desktop;   
         Taskbar taskbar(main_scale);
+
+        taskbar.addIcon("Button 1", "assets/button1.png", []{printf("Button 1 clicked.\n");});
+        taskbar.addIcon("Button 2", "assets/button2.png", []{printf("Button 2 clicked.\n");});
+        taskbar.addIcon("Button 3", "assets/button3.png", []{printf("Button 3 clicked.\n");});
+        
         while (!glfwWindowShouldClose(window))
         {
             glfwPollEvents();
