@@ -3,6 +3,7 @@
 #include "imgui_impl_opengl3.h"
 #include "Desktop.h"
 #include "Taskbar.h"
+#include "TaskManager.h"
 #include <stdio.h>
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
@@ -102,6 +103,7 @@ int main(int, char**)
     {
         Desktop desktop;   
         Taskbar taskbar(main_scale);
+        TaskManager taskManager;
 
 
         taskbar.addIcon("Button 1", "assets/start.png", [&show_start]{show_start = true;});
@@ -135,9 +137,7 @@ int main(int, char**)
             });
 
             if (show_task_manager) {
-                ImGui::Begin("Task Manager", &show_task_manager);
-                ImGui::Text("Placeholder...");
-                ImGui::End();
+                taskManager.draw(&show_task_manager);
             }
 
             if (show_start) {
