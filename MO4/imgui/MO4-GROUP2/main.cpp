@@ -4,6 +4,7 @@
 #include "Desktop.h"
 #include "Taskbar.h"
 #include "TaskManager.h"
+#include "FileExplorer.h"
 #include <stdio.h>
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
@@ -97,6 +98,7 @@ int main(int, char**)
 
     bool show_start = false;
     bool show_task_manager = false;
+    bool show_file_explorer = false;
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -104,11 +106,12 @@ int main(int, char**)
         Desktop desktop;   
         Taskbar taskbar(main_scale);
         TaskManager taskManager;
+        FileExplorer fileExplorer;
 
 
-        taskbar.addIcon("Button 1", "assets/start.png", [&show_start]{show_start = true;});
-        taskbar.addIcon("Button 2", "assets/taskmanager.png", [&show_task_manager]{show_task_manager = true;});
-        taskbar.addIcon("Button 3", "assets/button3.png", []{printf("Button 3 clicked.\n");});
+        taskbar.addIcon("Start", "assets/start.png", [&show_start]{show_start = true;});
+        taskbar.addIcon("Task Manager", "assets/taskmanager.png", [&show_task_manager]{show_task_manager = true;});
+        taskbar.addIcon("File Explorer", "assets/fileexplorer.png", [&show_file_explorer]{show_file_explorer = true;});
 
         GLuint pfp = loadImg("assets/pfp.png");
         GLuint chrome = loadImg("assets/chrome.png");
@@ -116,6 +119,7 @@ int main(int, char**)
         GLuint settings = loadImg("assets/settings.png");
         GLuint steam = loadImg("assets/steam.png");
         GLuint taskmanager = loadImg("assets/taskmanager.png");
+        GLuint fileexplorer = loadImg("assets/fileexplorer.png");
 
         while (!glfwWindowShouldClose(window))
         {
@@ -138,6 +142,10 @@ int main(int, char**)
 
             if (show_task_manager) {
                 taskManager.draw(&show_task_manager);
+            }
+
+            if (show_file_explorer) {
+                fileExplorer.draw(&show_file_explorer);
             }
 
             if (show_start) {
@@ -181,6 +189,7 @@ int main(int, char**)
                     { "Settings",     (ImTextureID)(intptr_t)settings },
                     { "Steam",        (ImTextureID)(intptr_t)steam },
                     { "Task Manager", (ImTextureID)(intptr_t)taskmanager },
+                    { "File Explorer", (ImTextureID)(intptr_t)fileexplorer },
                 };
 
                 ImGui::BeginChild("appContainer", ImVec2(240, 330), false);
