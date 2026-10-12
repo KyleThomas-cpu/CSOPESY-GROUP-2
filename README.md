@@ -1,39 +1,64 @@
-<img width="418" height="244" alt="image" src="https://github.com/user-attachments/assets/6fded0e3-4642-46ef-b630-54dc40ed2486" /># THIS WILL BE THE MAIN REPOSITORY FOR CSOPESY GROUP 2
+# CSOPESY Group 2 - MO4
 
-Group Members:
-JOHN WILLIAM GO
-MICHAEL LUIS GUTIERREZ
-KYLE THOMAS TIU
-RONIN ZERNA
+Main repository for CSOPESY Group 2: a desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.
 
+## Group Members
+JOHN WILLIAM GO<br>
+MICHAEL LUIS GUTIERREZ<br>
+KYLE THOMAS TIU<br>
+RONIN ZERNA<br>
 
+## How to Run the Program
 
-## INSTRUCTIONS HOW TO RUN THE PROGRAM
-### Option 1: Running the Executable file (Recommended)
+### Option 1: Run the executable (recommended)
 
-#### 1. Clone the repository
-#### 2. Open ...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/df4deb19-7fe6-4883-a173-7cf73c37a052" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/60628487-af18-4f38-9edc-b614dfa24641" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/7c4a0f2d-cf73-4b9b-b467-10100b419174" />
-#### 3. Open MO4-GROUP2.exe
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/8b7b7ff9-59ae-4e20-98f9-368a26ad5378" />
+1. Clone the repository.
+2. Open the folder `...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2`.
 
-#### 4. After running the program:
-<img width="600"  alt="image" src="https://github.com/user-attachments/assets/abda7f75-87fd-4e97-9988-d0f8fa901746" />
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/df4deb19-7fe6-4883-a173-7cf73c37a052" />
+   <br>
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/60628487-af18-4f38-9edc-b614dfa24641" />
+   <br>
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/7c4a0f2d-cf73-4b9b-b467-10100b419174" />
 
+3. Open the exe file `MO4-GROUP2.exe`. <br>*Note: The `assets` folder must be in the same folder together with `MO4-GROUP2.exe`, or the assets won't load.*
 
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/8b7b7ff9-59ae-4e20-98f9-368a26ad5378" />
 
+4. The program should now be running:
 
-### Option 2: Run using x86 Native Tools for Command Prompt VS
-#### 1. Clone the repository
-#### 2. In the search bar locate x86 Native Tools for Command Prompt VS and open
-<img width="418" height="244" alt="Screenshot 2026-10-12 160649" src="https://github.com/user-attachments/assets/22e7fb18-9075-40f4-b8e8-98c8827d14e7" />
-#### 3. cd C:\...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2
-<img width="1182" height="256" alt="image" src="https://github.com/user-attachments/assets/05117694-0a55-4136-91c6-4f396171f8b6" />
-#### 4. build_win32.bat
-<img width="1169" height="578" alt="image" src="https://github.com/user-attachments/assets/db84fb4c-0103-400b-a183-f082dd55466b" />
-5. debug\MO4-GROUP2.exe
-<img width="1919" height="1079" alt="Screenshot 2026-10-12 161818" src="https://github.com/user-attachments/assets/3d127b2e-2e65-4620-a985-fce9172bd374" />
+   <img width="1000" alt="img" src="https://github.com/user-attachments/assets/abda7f75-87fd-4e97-9988-d0f8fa901746" />
+
+### Option 2: Build and run with x86 Native Tools Command Prompt for VS
+
+1. Clone the repository.
+2. Search for **x86 Native Tools Command Prompt for VS** in the Start menu and open it.
+
+   <img width="400" alt="img" alt="x86 Native Tools Command Prompt" src="https://github.com/user-attachments/assets/22e7fb18-9075-40f4-b8e8-98c8827d14e7" />
+
+3. Go to the project folder:
+
+```
+   cd C:\...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2
+```
+
+   <img width="800" alt="img" alt="cd into the project folder" src="https://github.com/user-attachments/assets/05117694-0a55-4136-91c6-4f396171f8b6" />
+
+4. Build the program:
+
+```
+   build_win32.bat
+```
+
+   <img width="800" alt="img" src="https://github.com/user-attachments/assets/db84fb4c-0103-400b-a183-f082dd55466b" />
+
+5. Run it:
+
+```
+   Debug\MO4-GROUP2.exe
+```
+
+   <img width="1000" alt="img" alt="Running program" src="https://github.com/user-attachments/assets/3d127b2e-2e65-4620-a985-fce9172bd374" />
+
 
 
