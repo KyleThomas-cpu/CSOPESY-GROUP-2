@@ -1,5 +1,5 @@
 # CSOPESY Group 2 - MO4
-A desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.
+A desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.<br>
 **Entry class file:** `MO4/imgui/MO4-GROUP2/main.cpp
 
 ## Group Members
