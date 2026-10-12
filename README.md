@@ -1,6 +1,6 @@
 # CSOPESY Group 2 - MO4
-
-Main repository for CSOPESY Group 2: a desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.
+A desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.
+**Entry class file:** `MO4/imgui/MO4-GROUP2/main.cpp
 
 ## Group Members
 JOHN WILLIAM GO<br>
