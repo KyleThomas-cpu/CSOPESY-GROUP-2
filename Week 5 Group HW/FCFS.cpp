@@ -108,6 +108,7 @@ int main(){
         std::cout << "root:\\ " << std::flush;
         if(!std::getline(std::cin, inputt)) break;
 
+        // trims left and right side
         inputt.erase(0, inputt.find_first_not_of(" \t\r\n"));
         inputt.erase(inputt.find_last_not_of(" \t\r\n") +  1);
         if (inputt == "screen -ls"){
