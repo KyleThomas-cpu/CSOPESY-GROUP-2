@@ -113,7 +113,7 @@ int main(){
         inputt.erase(inputt.find_last_not_of(" \t\r\n") +  1);
         if (inputt == "screen -ls"){
             // scheduler func
-        }else if(inputt == "ëxit"){
+        }else if(inputt == "exit"){
             break;
         }else if (!inputt.empty()){
             std::cout << "Unknown command: " << inputt << "\n";
