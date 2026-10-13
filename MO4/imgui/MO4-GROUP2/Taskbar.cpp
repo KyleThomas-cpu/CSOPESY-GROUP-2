@@ -73,7 +73,7 @@ unsigned int Taskbar::loadTexture(const char* filename)
 
     stbi_image_free(data);
 
-    return true;
+    return tex;
 
 }
 
