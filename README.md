@@ -1,41 +1,64 @@
-# THIS WILL BE THE MAIN REPOSITORY FOR CSOPESY GROUP 2
+# CSOPESY Group 2 - MO4
+A desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.<br>
+**Entry class file:** `MO4/imgui/MO4-GROUP2/main.cpp
 
-Group Members:
-JOHN WILLIAM GO
-MICHAEL LUIS GUTIERREZ
-KYLE THOMAS TIU
-RONIN ZERNA
+## Group Members
+JOHN WILLIAM GO<br>
+MICHAEL LUIS GUTIERREZ<br>
+KYLE THOMAS TIU<br>
+RONIN ZERNA<br>
+
+## How to Run the Program
+
+### Option 1: Run the executable (recommended)
+
+1. Clone the repository.
+2. Open the folder `...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2`.
+
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/df4deb19-7fe6-4883-a173-7cf73c37a052" />
+   <br>
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/60628487-af18-4f38-9edc-b614dfa24641" />
+   <br>
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/7c4a0f2d-cf73-4b9b-b467-10100b419174" />
+
+3. Open the exe file `MO4-GROUP2.exe`. <br>*Note: The `assets` folder must be in the same folder together with `MO4-GROUP2.exe`, or the assets won't load.*
+
+   <img width="400" alt="img" src="https://github.com/user-attachments/assets/8b7b7ff9-59ae-4e20-98f9-368a26ad5378" />
+
+4. The program should now be running:
+
+   <img width="1000" alt="img" src="https://github.com/user-attachments/assets/abda7f75-87fd-4e97-9988-d0f8fa901746" />
+
+### Option 2: Build and run with x86 Native Tools Command Prompt for VS
+
+1. Clone the repository.
+2. Search for **x86 Native Tools Command Prompt for VS** in the Start menu and open it.
+
+   <img width="400" alt="img" alt="x86 Native Tools Command Prompt" src="https://github.com/user-attachments/assets/22e7fb18-9075-40f4-b8e8-98c8827d14e7" />
+
+3. Go to the project folder:
+
+```
+   cd C:\...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2
+```
+
+   <img width="800" alt="img" alt="cd into the project folder" src="https://github.com/user-attachments/assets/05117694-0a55-4136-91c6-4f396171f8b6" />
+
+4. Build the program:
+
+```
+   build_win32.bat
+```
+
+   <img width="800" alt="img" src="https://github.com/user-attachments/assets/db84fb4c-0103-400b-a183-f082dd55466b" />
+
+5. Run it:
+
+```
+   Debug\MO4-GROUP2.exe
+```
+
+   <img width="1000" alt="img" alt="Running program" src="https://github.com/user-attachments/assets/3d127b2e-2e65-4620-a985-fce9172bd374" />
 
 
 
-# INSTRUCTIONS HOW TO RUN THE PROGRAM
-Option 1: Running the Executable file (Recommended)
-1. Clone the repository
-2. Open the cloned repository and find main.exe
-3. Run main.exe
-<img width="614" height="57" alt="image" src="https://github.com/user-attachments/assets/4c3ddf28-d467-4c68-a872-b19e79be7a8d" />
-
-After running the program:
-<img width="976" height="567" alt="image" src="https://github.com/user-attachments/assets/9c747c0e-8fae-44b7-adb2-011cfafc6831" />
-
-
-
-Option 2: Run using Visual Studio Code
-1. Clone the repository
-2. Open the cloned repository in Visual Studio Code
-3. Open main.cpp
-4. Click the run button on the top right corner of Visual Studio Code.
-<img width="1147" height="484" alt="image" src="https://github.com/user-attachments/assets/b54c1e6e-9516-46df-9a83-7a4b63ceb0b8" />
-
-
-
-After running the program:
-<img width="910" height="430" alt="image" src="https://github.com/user-attachments/assets/0d75f8ca-1360-4505-806a-8bee6cad9264" />
-
-# LIST OF COMMANDS
-  help            - displays the commands and description<br>
-  start_marquee   - starts marquee animation<br>
-  stop_marquee    - stops marquee animation<br>
-  set_text <text> - sets the text that will display as marquee<br>
-  set_speed <ms>  - sets how fast the marquee animation will refresh in ms<br>
-  exit            - exits the console<br>
