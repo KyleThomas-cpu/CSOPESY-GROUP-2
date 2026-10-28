@@ -4,7 +4,10 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <map>
 #include "config.h"
+#include "process.h"
+#include "report.h"
 
 #define RESET   "\033[0m"
 #define RED     "\033[31m"
@@ -43,10 +46,52 @@ void clearScreen() {
     cout << "\033[2J\033[H";   
 }
 
+void printProcessInfo(const Process& p){
+    cout << "Process name: " << p.name << "\n";
+    cout << "ID: " << p.uniqueId << "\n";
+    cout << "Logs:\n";
+    for(const auto& l : p.logs) cout << l << "\n";
+    cout << "\n";
+    if(p.isFinished()){
+        cout << "Finished!\n";
+    }else{
+        cout << "Current instruction line: " << p.pc << "\n";
+        cout << "Lines of code: " << p.instructions.size() << "\n";
+    }
+}
+
+void processScreen(Process& p ){
+    clearScreen();
+    printProcessInfo(p);
+    string line;
+    
+    while(true){
+        cout << "\nroot:\\> ";
+        if(!getline(cin, line)) return;
+
+        if(line == "exit") return;
+
+        if(line == "process-smi"){
+            printProcessInfo(p);
+        }else if (line.rfind("run", 0) == 0) {   // DEBUG ONLY: delete once the scheduler exists
+            int n = 1;
+            try { if (line.size() > 4) n = stoi(line.substr(4)); } catch (...) {}
+            for (int i = 0; i < n && !p.isFinished(); ++i) {
+                exeNext(p, 0);
+                while (p.pState == ProcessStates::SLEEPING) tickSleep(p);
+            }
+        } else {
+            cout << "Unknown command.\n";
+        }
+    }
+}
+
 int main() {
     Config cfg;
+    map<string, Process> processes;
     bool initialized = false;
     string line;
+    int nextId = 1;
     start();
 
     while (true) {
@@ -79,16 +124,43 @@ int main() {
 
         if (cmd == "initialize") {
             cout << "Already initialized.\n";
-        } else if (cmd == "screen") {
-            string args;
-            getline(iss, args);
-            cout << "screen command recognized. args:" << args << "\n";
-        } else if (cmd == "scheduler-start") {
+        } 
+
+        else if (cmd == "screen") {
+            string flag, name;
+            iss >> flag >> name;
+
+            if(flag == "-s" && !name.empty()){
+                if(processes.count(name)){
+                    cout << "Process " << name << " already exists.\n";
+                    continue; 
+                }
+                processes[name] = generateProcess(nextId++, name, cfg);
+                processScreen(processes[name]);
+                clearScreen();
+                start();
+            }else if(flag == "-r" && !name.empty()){
+                auto it = processes.find(name);
+                if(it == processes.end() || it->second.isFinished()){
+                    cout << "Process " + name << " not found.\n";
+                }else{
+                    processScreen(it->second);
+                    clearScreen();
+                    start();
+                }
+            }else if(flag == "-ls"){
+                cout << buildReport(processes, cfg);
+            }else{
+                cout << "Usage: screen -s <name> | screen -r <name> | screen -ls\n";
+            }
+
+        }
+         else if (cmd == "scheduler-start") {
             cout << "scheduler-start command recognized.\n";
         } else if (cmd == "scheduler-stop") {
             cout << "scheduler-stop command recognized.\n";
         } else if (cmd == "report-util") {
-            cout << "report-util command recognized.\n";
+            //
         } else if (cmd == "clear") {
             clearScreen();
             start();
