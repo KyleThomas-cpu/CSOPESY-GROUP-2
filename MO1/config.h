@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstdint>
 
 struct Config{
     uint32_t numOfCpu = 0;

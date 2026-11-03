@@ -1,10 +1,11 @@
 #include <iostream>
 #include <ctime>
+#include <filesystem>
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <cstdlib>
 #include <map>
+#include "scheduler.h"
 #include "config.h"
 #include "process.h"
 #include "report.h"
@@ -73,13 +74,13 @@ void processScreen(Process& p ){
 
         if(line == "process-smi"){
             printProcessInfo(p);
-        }else if (line.rfind("run", 0) == 0) {   // DEBUG ONLY: delete once the scheduler exists
-            int n = 1;
-            try { if (line.size() > 4) n = stoi(line.substr(4)); } catch (...) {}
-            for (int i = 0; i < n && !p.isFinished(); ++i) {
-                exeNext(p, 0);
-                while (p.pState == ProcessStates::SLEEPING) tickSleep(p);
-            }
+        // }else if (line.rfind("run", 0) == 0) {   // DEBUG ONLY: delete once the scheduler exists
+        //     int n = 1;
+        //     try { if (line.size() > 4) n = stoi(line.substr(4)); } catch (...) {}
+        //     for (int i = 0; i < n && !p.isFinished(); ++i) {
+        //         exeNext(p, 0);
+        //         while (p.pState == ProcessStates::SLEEPING) tickSleep(p);
+        //     }
         } else {
             cout << "Unknown command.\n";
         }
@@ -88,10 +89,9 @@ void processScreen(Process& p ){
 
 int main() {
     Config cfg;
-    map<string, Process> processes;
+    Scheduler s;
     bool initialized = false;
     string line;
-    int nextId = 1;
     start();
 
     while (true) {
@@ -108,8 +108,17 @@ int main() {
             if (cmd == "initialize") {
                 string error;
                 Config temp;
+                cout << "Looking in: " << std::filesystem::current_path() << "\n";
                 if (loadConfig("config.txt", temp, error)) {
                     cfg = temp;
+                    s.init(cfg);
+
+                    // 10 dummy processes (delete na lang later)
+                    for (int i = 1; i <= 10; i++) {
+                        std::string name = "p" + std::to_string(i);
+                        s.createProcess(name);
+                    }
+
                     initialized = true;
                     cout << "Initialized: " << cfg.numOfCpu << " CPU(s), scheduler="
                          << cfg.scheduler << "\n";
@@ -131,34 +140,34 @@ int main() {
             iss >> flag >> name;
 
             if(flag == "-s" && !name.empty()){
-                if(processes.count(name)){
+                Process* p = s.createProcess(name);
+                if(!p){
                     cout << "Process " << name << " already exists.\n";
                     continue; 
                 }
-                processes[name] = generateProcess(nextId++, name, cfg);
-                processScreen(processes[name]);
+                processScreen(*p);
                 clearScreen();
                 start();
             }else if(flag == "-r" && !name.empty()){
-                auto it = processes.find(name);
-                if(it == processes.end() || it->second.isFinished()){
-                    cout << "Process " + name << " not found.\n";
+                Process* p = s.findActive(name);
+                if (!p) {
+                    cout << "Process " << name << " not found.\n";
                 }else{
-                    processScreen(it->second);
+                    processScreen(*p);
                     clearScreen();
                     start();
                 }
             }else if(flag == "-ls"){
-                cout << buildReport(processes, cfg);
+                cout << buildReport(s.processes(), cfg);
             }else{
                 cout << "Usage: screen -s <name> | screen -r <name> | screen -ls\n";
             }
 
         }
          else if (cmd == "scheduler-start") {
-            cout << "scheduler-start command recognized.\n";
+            s.startRunning();
         } else if (cmd == "scheduler-stop") {
-            cout << "scheduler-stop command recognized.\n";
+            s.stopRunning();
         } else if (cmd == "report-util") {
             //
         } else if (cmd == "clear") {

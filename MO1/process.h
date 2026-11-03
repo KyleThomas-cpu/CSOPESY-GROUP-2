@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cstdint>
 
 enum class InstructionTypes {PRINT, DECLARE, ADD, SUBTRACT, SLEEP};
 enum class ProcessStates {READY, RUNNING, SLEEPING, FINISHED};
@@ -35,6 +36,7 @@ struct Process{
 
     bool isFinished() const {return pState == ProcessStates::FINISHED;}
 };
+
 
 Process generateProcess(int id, const std::string& name, const Config& config);
 

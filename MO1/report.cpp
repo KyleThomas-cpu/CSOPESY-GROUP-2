@@ -7,7 +7,8 @@
 std::string buildReport(const std::map<std::string, Process>& processes, const Config& cfg){
     std::set<int> usedCores;
     for(const auto& [name, p] : processes){
-        if(p.pState == ProcessStates::RUNNING && p.core >= 0) usedCores.insert(p.core);
+        if (p.core >= 0)
+            usedCores.insert(p.core);
     }
     int total = static_cast<int>(cfg.numOfCpu);
     int used = static_cast<int>(usedCores.size());
@@ -21,10 +22,11 @@ std::string buildReport(const std::map<std::string, Process>& processes, const C
 
     out << "Running processes:\n";
     for (const auto& [name, p] : processes){
-        if(p.isFinished()) continue;
-
+        if (p.isFinished()) {
+            continue;
+        }
         out << std::left << std::setw(12) << p.name << " (" << p.createdAt << ")   ";
-        if(p.pState == ProcessStates::RUNNING){
+        if(p.core >= 0){
             out << "Core: " << p.core;
         }else{
             out << "Core: -";
