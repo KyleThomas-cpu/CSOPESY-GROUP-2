@@ -5,7 +5,7 @@
 #include <chrono>
 #include <cstdio>
 
-static constexpr int TICK_MS = 10;   // real time per CPU cycle
+static constexpr int TICK_MS = 10;  
 
 Scheduler::~Scheduler() { shutdown(); }
 
@@ -49,7 +49,7 @@ uint64_t Scheduler::cycles() const {
 
 void Scheduler::createLocked(const std::string& name) {
     auto res = processes_.emplace(name, generateProcess(nextId_++, name, cfg_));
-    ready_.push_back(&res.first->second);       // new processes join the back of the line
+    ready_.push_back(&res.first->second);       
 }
 
 bool Scheduler::createProcess(const std::string& name) {
@@ -59,7 +59,6 @@ bool Scheduler::createProcess(const std::string& name) {
     return true;
 }
 
-// Human-readable names: p01, p02, ... skipping any the user already took via screen -s.
 std::string Scheduler::nextAutoName() {
     for (;;) {
         char buf[32];
@@ -93,7 +92,6 @@ void Scheduler::tick() {
     ++cycles_;
     const bool rr = (cfg_.scheduler == "rr");
 
-    // 1. wake sleeping processes
     for (size_t i = 0; i < sleeping_.size();) {
         Process* p = sleeping_[i];
         if (tickSleep(*p)) {
@@ -102,7 +100,6 @@ void Scheduler::tick() {
         } else ++i;
     }
 
-    // 2. scheduler-start: one new process every batch-process-freq cycles
     if (generating_) {
         if (++sinceLastGen_ >= cfg_.batchProcessFreq) {
             sinceLastGen_ = 0;
@@ -110,7 +107,6 @@ void Scheduler::tick() {
         }
     }
 
-    // 3. dispatch ready processes onto free cores
     for (size_t i = 0; i < cores_.size() && !ready_.empty(); ++i) {
         if (cores_[i].proc) continue;
         Process* p = ready_.front();
@@ -121,14 +117,13 @@ void Scheduler::tick() {
         cores_[i].ran = 0;
     }
 
-    // 4. run one CPU cycle on every busy core
     for (size_t i = 0; i < cores_.size(); ++i) {
         Core& c = cores_[i];
         if (!c.proc) continue;
         Process& p = *c.proc;
 
         if (p.waitRemaining > 0) {
-            --p.waitRemaining;                       // busy-waiting (delay-per-exec)
+            --p.waitRemaining;                       
         } else {
             exeNext(p, static_cast<int>(i));
             p.waitRemaining = cfg_.delayPerExec;
@@ -138,18 +133,18 @@ void Scheduler::tick() {
         if (p.isFinished()) {
             p.core = -1;
             c.proc = nullptr;
-        } else if (p.pState == ProcessStates::SLEEPING) {   // SLEEP relinquishes the CPU
+        } else if (p.pState == ProcessStates::SLEEPING) {  
             p.core = -1;
             c.proc = nullptr;
             sleeping_.push_back(&p);
-        } else if (rr && c.ran >= cfg_.quantumCycles) {     // quantum expired
+        } else if (rr && c.ran >= cfg_.quantumCycles) {     
             if (!ready_.empty()) {
                 p.pState = ProcessStates::READY;
                 p.core = -1;
                 c.proc = nullptr;
                 ready_.push_back(&p);
             } else {
-                c.ran = 0;                                  // nobody waiting: keep the core
+                c.ran = 0;                                  
             }
         }
     }

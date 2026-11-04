@@ -94,7 +94,7 @@ int main() {
 #ifdef _WIN32
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD mode = 0;
-    if (GetConsoleMode(hOut, &mode)) SetConsoleMode(hOut, mode | 0x0004);  // enable ANSI colors
+    if (GetConsoleMode(hOut, &mode)) SetConsoleMode(hOut, mode | 0x0004);  
 #endif
     Config cfg;
     Scheduler s;

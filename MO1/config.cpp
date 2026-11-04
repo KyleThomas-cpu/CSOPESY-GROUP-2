@@ -7,7 +7,7 @@
 
 static bool parseInt(const std::string& s, uint64_t& out) {
     if (s.empty() || s.size() > 10 || !std::all_of(s.begin(), s.end(), [](unsigned char ch){ return std::isdigit(ch) != 0; })) return false;
-    out = std::stoull(s);                       // at most 10 digits, can't throw
+    out = std::stoull(s);                       
     return out <= 0xFFFFFFFFULL;
 }
 

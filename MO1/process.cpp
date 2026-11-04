@@ -16,7 +16,6 @@ std::string currentTimestamp() {
     return buf;
 }
 
-// ---------- random generation ----------
 static std::mt19937_64& rng() {
     static std::mt19937_64 gen{std::random_device{}()};
     return gen;
@@ -35,12 +34,11 @@ static Operand randomOperand() {
     return op;
 }
 
-// PRINT 30%, ADD 20%, DECLARE 20%, SUBTRACT 20%, SLEEP 10%
 static Instruction randomInstruction() {
     Instruction i;
     int r = static_cast<int>(randomInt(0, 9));
     if (r <= 2) {
-        i.type = InstructionTypes::PRINT;      // msg is always "Hello world from <name>!"
+        i.type = InstructionTypes::PRINT;      
     } else if (r <= 4) {
         i.type = InstructionTypes::ADD;
         i.var1 = randomVar(); i.x = randomOperand(); i.y = randomOperand();
@@ -57,8 +55,6 @@ static Instruction randomInstruction() {
     return i;
 }
 
-// Builds a block whose flattened length is exactly `budget`. FORs nest at most 3 deep
-// (FOR at depth 0, 1 and 2 -> three levels).
 static std::vector<Instruction> genBlock(int64_t budget, int depth) {
     std::vector<Instruction> out;
     while (budget > 0) {
@@ -100,16 +96,14 @@ Process generateProcess(int id, const std::string& name, const Config& cfg) {
     return p;
 }
 
-// ---------- execution ----------
 static uint16_t resolve(Process& p, const Operand& op) {
     if (!op.isVariable) return op.val;
-    return p.variables[op.name];            // auto-declares to 0
+    return p.variables[op.name];            
 }
 static uint16_t clamp16(int32_t v) {
     return static_cast<uint16_t>(std::max<int32_t>(0, std::min<int32_t>(65535, v)));
 }
 
-// Walks the FOR stack to the next simple instruction. FOR headers cost no CPU cycle.
 static const Instruction* nextSimple(Process& p) {
     if (!p.started) {
         p.stack.push_back(Frame{p.program.get(), 0, 1});
@@ -123,7 +117,7 @@ static const Instruction* nextSimple(Process& p) {
             continue;
         }
         const Instruction& in = (*f.body)[f.idx];
-        ++f.idx;                                           // before push_back invalidates f
+        ++f.idx;                                          
         if (in.type == InstructionTypes::FOR) {
             if (in.repeats > 0 && !in.body.empty())
                 p.stack.push_back(Frame{&in.body, 0, in.repeats});
@@ -159,10 +153,10 @@ bool exeNext(Process& p, int coreId) {
             break;
         case InstructionTypes::SLEEP:
             p.sleepRemaining = in->ticks;
-            p.pState = ProcessStates::SLEEPING;      // scheduler relinquishes the core
+            p.pState = ProcessStates::SLEEPING;      
             break;
         case InstructionTypes::FOR:
-            break;                                    // never returned by nextSimple
+            break;                                    
     }
 
     ++p.executed;

@@ -10,8 +10,6 @@
 #include "config.h"
 #include "process.h"
 
-// Real-time CPU scheduler. Once init() is called a background thread ticks continuously;
-// every tick runs one "CPU cycle" on every core. All shared state is guarded by mtx_.
 class Scheduler {
 public:
     Scheduler() = default;
@@ -19,22 +17,22 @@ public:
     Scheduler(const Scheduler&) = delete;
     Scheduler& operator=(const Scheduler&) = delete;
 
-    void init(const Config& cfg);     // configures cores and starts the scheduler thread
-    void shutdown();                  // stops the scheduler thread
+    void init(const Config& cfg);     
+    void shutdown();                  
 
-    void startGenerating();           // scheduler-start
-    void stopGenerating();            // scheduler-stop
+    void startGenerating();           
+    void stopGenerating();           
     bool isGenerating() const { return generating_; }
 
-    bool createProcess(const std::string& name);                    // false if name is taken
-    bool snapshot(const std::string& name, Process& out) const;     // copy of a process (thread-safe)
-    std::string report() const;                                     // screen -ls / report-util text
+    bool createProcess(const std::string& name);                    
+    bool snapshot(const std::string& name, Process& out) const;     
+    std::string report() const;                                     
     uint64_t cycles() const;
 
 private:
     struct Core {
         Process* proc = nullptr;
-        uint64_t ran = 0;             // cycles used in the current time slice (RR)
+        uint64_t ran = 0;             
     };
 
     void run();
@@ -49,7 +47,7 @@ private:
 
     Config cfg_;
     std::vector<Core> cores_;
-    std::map<std::string, Process> processes_;   // std::map keeps Process* stable as it grows
+    std::map<std::string, Process> processes_;   
     std::deque<Process*> ready_;
     std::vector<Process*> sleeping_;
 
