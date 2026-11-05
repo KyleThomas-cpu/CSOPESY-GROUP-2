@@ -1,6 +1,4 @@
-# CSOPESY Group 2 - MO4
-A desktop style OS mockup built with Dear ImGui, GLFW, and OpenGL.<br>
-**Entry class file:** `MO4/imgui/MO4-GROUP2/main.cpp
+# CSOPESY Group 2 - MO1
 
 ## Group Members
 JOHN WILLIAM GO<br>
@@ -8,57 +6,37 @@ MICHAEL LUIS GUTIERREZ<br>
 KYLE THOMAS TIU<br>
 RONIN ZERNA<br>
 
-## How to Run the Program
+## How to Run the Program (only for Visual Studio and MSVC)
 
-### Option 1: Run the executable (recommended)
+### 1. Clone the project repository
+### 2. Open the cloned project in Visual Studio Code and open the powershell. Make sure you are in the MO1 folder.
+   <img width="435" height="87" alt="image" src="https://github.com/user-attachments/assets/d43258cb-0399-4432-9a5f-7819dafd8120" />
 
-1. Clone the repository.
-2. Open the folder `...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2`.
+### 3. Compile
+#### Make sure MSVC is installed and accessible in the terminal.
+<img width="597" height="145" alt="image" src="https://github.com/user-attachments/assets/b4737213-d0f5-4c77-b26e-e02eaad04ceb" />
 
-   <img width="400" alt="img" src="https://github.com/user-attachments/assets/df4deb19-7fe6-4883-a173-7cf73c37a052" />
-   <br>
-   <img width="400" alt="img" src="https://github.com/user-attachments/assets/60628487-af18-4f38-9edc-b614dfa24641" />
-   <br>
-   <img width="400" alt="img" src="https://github.com/user-attachments/assets/7c4a0f2d-cf73-4b9b-b467-10100b419174" />
 
-3. Open the exe file `MO4-GROUP2.exe`. <br>*Note: The `assets` folder must be in the same folder together with `MO4-GROUP2.exe`, or the assets won't load.*
-
-   <img width="400" alt="img" src="https://github.com/user-attachments/assets/8b7b7ff9-59ae-4e20-98f9-368a26ad5378" />
-
-4. The program should now be running:
-
-   <img width="1000" alt="img" src="https://github.com/user-attachments/assets/abda7f75-87fd-4e97-9988-d0f8fa901746" />
-
-### Option 2: Build and run with x86 Native Tools Command Prompt for VS
-
-1. Clone the repository.
-2. Search for **x86 Native Tools Command Prompt for VS** in the Start menu and open it.
-
-   <img width="400" alt="img" alt="x86 Native Tools Command Prompt" src="https://github.com/user-attachments/assets/22e7fb18-9075-40f4-b8e8-98c8827d14e7" />
-
-3. Go to the project folder:
-
+#### Copy and paste the following command to the terminal
+```powershell
+cl /std:c++17 /EHsc /Fe:csopesy.exe main.cpp config.cpp process.cpp report.cpp scheduler.cpp
 ```
-   cd C:\...\CSOPESY-GROUP-2\MO4\imgui\MO4-GROUP2
+<img width="794" height="370" alt="image" src="https://github.com/user-attachments/assets/97a013cd-a0ed-4589-8860-92b5ce38843b" />
+
+### 4. Run the program in the terminal
+
+#### Execute the command to the terminal
+```powershell
+   .\csopesy.exe
 ```
+<img width="553" height="313" alt="image" src="https://github.com/user-attachments/assets/72a4d2ce-6be1-4cf3-9c96-b0f3e542433b" />
 
-   <img width="800" alt="img" alt="cd into the project folder" src="https://github.com/user-attachments/assets/05117694-0a55-4136-91c6-4f396171f8b6" />
 
-4. Build the program:
+## Alternative method 
+### ℹ️ Make sure the program is compiled after changes are applied. Then you can run the executable file. 
+The executable file is located inside the MO1 folder
+<img width="611" height="36" alt="image" src="https://github.com/user-attachments/assets/82a22b6e-6e61-4afd-a745-3d33336e2e2d" />
 
-```
-   build_win32.bat
-```
-
-   <img width="800" alt="img" src="https://github.com/user-attachments/assets/db84fb4c-0103-400b-a183-f082dd55466b" />
-
-5. Run it:
-
-```
-   Debug\MO4-GROUP2.exe
-```
-
-   <img width="1000" alt="img" alt="Running program" src="https://github.com/user-attachments/assets/3d127b2e-2e65-4620-a985-fce9172bd374" />
 
 
 
