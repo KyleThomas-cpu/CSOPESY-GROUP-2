@@ -88,12 +88,6 @@ Process generateProcess(int id, const std::string& name, const Config& cfg) {
     p.uniqueId = id;
     p.name = name;
     p.createdAt = currentTimestamp();
-
-    int64_t target = randomInt(cfg.min_ins, cfg.max_ins);
-    auto prog = std::make_shared<std::vector<Instruction>>(genBlock(target, 0));
-    p.totalInstructions = countFlat(*prog);
-    p.program = std::move(prog);
-    return p;
 }
 
 static uint16_t resolve(Process& p, const Operand& op) {

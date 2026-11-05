@@ -5,7 +5,8 @@
 #include <chrono>
 #include <cstdio>
 
-static constexpr int TICK_MS = 10;  
+static constexpr int TICK_MS = 10;       
+static constexpr int GEN_TICKS_PER_FREQ = 10;  
 
 Scheduler::~Scheduler() { shutdown(); }
 
@@ -101,21 +102,23 @@ void Scheduler::tick() {
     }
 
     if (generating_) {
-        if (++sinceLastGen_ >= cfg_.batchProcessFreq) {
+        if (++sinceLastGen_ >= static_cast<uint64_t>(cfg_.batchProcessFreq) * GEN_TICKS_PER_FREQ) {
             sinceLastGen_ = 0;
             createLocked(nextAutoName());
         }
     }
-
-    for (size_t i = 0; i < cores_.size() && !ready_.empty(); ++i) {
-        if (cores_[i].proc) continue;
-        Process* p = ready_.front();
-        ready_.pop_front();
-        p->pState = ProcessStates::RUNNING;
-        p->core = static_cast<int>(i);
-        cores_[i].proc = p;
-        cores_[i].ran = 0;
-    }
+    auto dispatch = [&]() {
+        for (size_t i = 0; i < cores_.size() && !ready_.empty(); ++i) {
+            if (cores_[i].proc) continue;
+            Process* p = ready_.front();
+            ready_.pop_front();
+            p->pState = ProcessStates::RUNNING;
+            p->core = static_cast<int>(i);
+            cores_[i].proc = p;
+            cores_[i].ran = 0;
+        }
+    };
+    dispatch();
 
     for (size_t i = 0; i < cores_.size(); ++i) {
         Core& c = cores_[i];
@@ -148,4 +151,5 @@ void Scheduler::tick() {
             }
         }
     }
+    dispatch();
 }
