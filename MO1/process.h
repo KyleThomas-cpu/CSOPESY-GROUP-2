@@ -6,7 +6,9 @@
 #include <memory>
 #include <cstdint>
 
-enum class InstructionTypes { PRINT, DECLARE, ADD, SUBTRACT, SLEEP, FOR };
+class MemoryManager;
+
+enum class InstructionTypes { PRINT, DECLARE, ADD, SUBTRACT, SLEEP, FOR, READ, WRITE};
 enum class ProcessStates { READY, RUNNING, SLEEPING, FINISHED };
 
 struct Operand {
@@ -20,7 +22,9 @@ struct Instruction {
     std::string var1;                 
     Operand x, y;                     
     uint8_t ticks = 0;                
-    std::string printValue;           
+    std::string printValue;    
+    std::string printText;
+    uint32_t address = 0;       
     std::vector<Instruction> body;    
     uint32_t repeats = 0;             
 };
@@ -50,12 +54,22 @@ struct Process {
     uint32_t waitRemaining = 0;       
     std::string createdAt;
 
+    uint32_t memSize = 0;
+    std::vector<int> pageTable;
+    std::map<std::string, uint32_t> symbols;
+    bool violated = false;
+    uint32_t violatedAdd = 0;
+    std::string violationTime;
+
     bool isFinished() const { return pState == ProcessStates::FINISHED; }
 };
 
 std::string currentTimestamp();
-Process generateProcess(int id, const std::string& name, const Config& config);
+uint32_t randomMemorySize(const Config& config);
+Process generateProcess(int id, const std::string& name, uint32_t memSize, const Config& config);
+Process buildProcess(int id, const std::string& name, uint32_t memSize, std::vector<Instruction> prog, const Config& config);
 
+bool parseInstructions(const std::string& text, std::vector<Instruction>&  out);
 bool exeNext(Process& p, int coreId);
 
 bool tickSleep(Process& p);
